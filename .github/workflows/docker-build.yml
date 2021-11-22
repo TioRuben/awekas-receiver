@@ -1,4 +1,4 @@
-name: ci
+name: Docker build
 
 on:
   push:
@@ -9,6 +9,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Set up Node
         uses: actions/setup-node@v2
       - name: Install dependencies
@@ -16,8 +17,10 @@ jobs:
       - name: Run unit tests
         run: yarn test
   build:
+    if: success()
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Set up Node
         uses: actions/setup-node@v2
       - name: Install dependencies
@@ -25,8 +28,10 @@ jobs:
       - name: Run unit tests
         run: yarn build
   docker:
+    if: success()
     runs-on: ubuntu-latest
     steps:
+      - uses: ./build
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
