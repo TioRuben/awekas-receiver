@@ -57,5 +57,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./
-          push: false
+          push: true
           tags: tioruben/awekas-receiver:latest
